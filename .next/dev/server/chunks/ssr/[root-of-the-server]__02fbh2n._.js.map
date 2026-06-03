@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 13, "column": 0}, "map": {"version":3,"sources":["file:///Users/mateohernandez/Desktop/the-faith-project/app/favicon.ico.mjs%20%28structured%20image%20object%29"],"sourcesContent":["import src from \"IMAGE\";\nexport default { src, width: 256, height: 256 }\n"],"names":["src","width","height"],"mappings":";;;;AAAA;;uCACe;IAAEA,KAAAA,mIAAG;IAAEC,OAAO;IAAKC,QAAQ;AAAI"}},
+    {"offset": {"line": 28, "column": 0}, "map": {"version":3,"sources":["file:///Users/mateohernandez/Desktop/the-faith-project/app/page.tsx"],"sourcesContent":["export default function Home() {\n  const adjectives = [\n    \"Faith\",\n    \"Hope\",\n    \"Love\",\n    \"Ambition\",\n    \"Wit\",\n    \"Bravery\",\n    \"Fear\",\n    \"Enthusiasm\",\n    \"Strength\",\n    \"Passion\",\n    \"Trust\",\n  ];\n\n  return (\n    <div className=\"\">\n      <main className=\"\">\n        <h1>It Takes Alot To Have</h1>\n        <h1>Faith</h1>\n      </main>\n    </div>\n  );\n}\n"],"names":["Home","adjectives","className"],"mappings":";;;;;;AAAe,SAASA;IACtB,MAAMC,aAAa;QACjB;QACA;QACA;QACA;QACA;QACA;QACA;QACA;QACA;QACA;QACA;KACD;IAED,qBACE,8OAAC;QAAIC,WAAU;kBACb,cAAA,8OAAC;YAAKA,WAAU;;8BACd,8OAAC;8BAAG;;;;;;8BACJ,8OAAC;8BAAG;;;;;;;;;;;;;;;;;AAIZ"}}]
+}

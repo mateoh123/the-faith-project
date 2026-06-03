@@ -1,63 +1,90 @@
-import Image from "next/image";
+"use client";
+
+import { useState, useEffect } from "react";
+import Countdown, { CountdownRenderProps } from "react-countdown";
 
 export default function Home() {
+  const adjectives = [
+    "Hope",
+    "Love",
+    "Ambition",
+    "Wit",
+    "Bravery",
+    "Fear",
+    "Enthusiasm",
+    "Strength",
+    "Passion",
+    "Trust",
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isFinished, setIsFinished] = useState(false);
+  const [showTimer, setShowTimer] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % adjectives.length);
+    }, 100);
+
+    const timeout = setTimeout(() => {
+      setIsFinished(true);
+      clearInterval(interval);
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, [adjectives.length]);
+
+  useEffect(() => {
+    if (isFinished) {
+      const fadeDelay = setTimeout(() => setShowTimer(true), 300);
+      return () => clearTimeout(fadeDelay);
+    }
+  }, [isFinished]);
+
+  const targetDate = new Date("2026-10-01T00:00:00");
+
+  const renderer = ({
+    days,
+    hours,
+    minutes,
+    seconds,
+    completed,
+  }: CountdownRenderProps) => {
+    if (completed) {
+      return (
+        <p className="text-sm font-normal normal-case tracking-widest mt-4">
+          Times up.
+        </p>
+      );
+    }
+    return (
+      <p className="text-sm font-normal normal-case tracking-widest mt-4">
+        {days}d {hours}h {minutes}m {seconds}s
+      </p>
+    );
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+    <div className="flex items-center justify-center h-screen w-screen overflow-hidden max-h-screen relative">
+      <main className="flex flex-col items-center justify-center font-black uppercase scale-y-150 text-center h-32 select-none">
+        <h1>You Can Have</h1>
+
+        {!isFinished && (
+          <h1 className="line-through">{adjectives[currentIndex]}</h1>
+        )}
+
+        {isFinished && <h1>Faith</h1>}
+
+        <div
+          style={{
+            opacity: showTimer ? 1 : 0,
+            transition: "opacity 1s ease-in",
+          }}
+        >
+          <Countdown date={targetDate} renderer={renderer} />
         </div>
       </main>
     </div>
